@@ -1,0 +1,29 @@
+## First install the necessary packages
+	sudo apt install cups cups-filters printer-driver-cups-pdf ghostscript gsfonts printer-driver-gutenprint foomatic-db foomatic-db-compressed-ppds system-config-printer avahi-daemon avahi-discover avahi-autoipd libnss-mdns ipp-usb smbclient lininsane1 sane-airscan hplip
+
+## Enable the CUPS Service using systemctl
+  sudo systemctl enable --now cups.service
+
+## Enable the AVAHI service using systemctl
+  sudo systemctl enable --now avahi-daemon.service
+
+## Enable the IPP-over-USB Service (many modern printers use it)
+  sudo systemctl enable --now ipp-usb.service
+
+## Open the config and change „hosts“ using your favourite Text Editor (vim, nano,...)
+  '''sudo nano /etc/nsswitch.conf'''
+	  hosts: files mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] 	dns mymachines
+
+## Restart the AVAHI service
+  sudo systemctl restart avahi-daemon
+
+## Configure your firewall to allow following ports (in this case ufw/gufw) You may need to the command to your Firewall Service
+  sudo ufw allow 631/tcp
+  sudo ufw allow 5353/udp
+
+## Add yourself to the scanner Group
+  sudo gpasswd -a "$USER" scanner
+
+## Log out and back in
+
+## Add your printer via the installed package "system-config-printer"
