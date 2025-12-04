@@ -1,5 +1,5 @@
 ## First install the necessary packages
-	sudo apt install cups cups-filters printer-driver-cups-pdf ghostscript gsfonts printer-driver-gutenprint foomatic-db foomatic-db-compressed-ppds system-config-printer avahi-daemon avahi-discover avahi-autoipd libnss-mdns ipp-usb smbclient lininsane1 sane-airscan hplip
+	sudo apt install cups cups-filters printer-driver-cups-pdf ghostscript gsfonts printer-driver-gutenprint foomatic-db foomatic-db-compressed-ppds system-config-printer avahi-daemon avahi-discover avahi-autoipd libnss-mdns ipp-usb smbclient libinsane1 sane-airscan hplip
 
 ## Enable the CUPS Service using systemctl
   sudo systemctl enable --now cups.service
