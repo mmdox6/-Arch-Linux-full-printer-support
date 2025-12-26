@@ -1,0 +1,66 @@
+NOTE: to get a better experience I recommend adding the Arch repos in order to get two packages, that are missing in the Artix repos
+  1. Install the "artix-archlinux-support" package
+  2. Edit the "/etc/pacman.conf" file and add the arch repo at the bottom like this:
+      [extra]
+      Include = /etc/pacman.d/mirrorlist-arch
+  3. Resynchronise your package database with
+      sudo pacman -Sy
+  4. Add the "ipp-usb" and "sane-airscan" packages to the long list of packages to install
+
+## First install the necessary packages
+	sudo pacman -S --needed cups cups-filters cups-pdf ghostscript gsfonts gutenprint foomatic-db foomatic-db-ppds system-config-printer avahi nss-mdns smbclient sane sane-runit hplip
+
+## Enable the CUPS Service
+  sudo ln -s /etc/runit/sv/cupsd /run/runit/service
+  sudo sv up cupsd
+  ## to check wether the CUPS Service is running, use this command:
+     sudo sv status cupsd
+  ## you should get something like this:
+      run: cupsd: (pid 925) 26s
+
+## Enable the AVAHI service
+  sudo ln -s /etc/runit/sv/avahi-daemon /run/runit/service
+  sudo sv up avahi-daemon
+    ## to check wether the avahi-daemon is running, use this command:
+      sudo sv status avahi-daemon
+    ## you should get something like this:
+      run: avahi-daemon: (pid 9879) 17s
+
+## Enable the ipp-usb service (if added from the arch repo)
+  NOTE: since we installed "ipp-usb" from the arch repo, it does not automatically create a service file in our /etc/runit/sv/ directory. Therefore we will have to create the file manually
+    ## First create a service directory
+      sudo mkdir -v /etc/runit/sv/ipp-usb
+    ## Now we create the run file (replace vim with your editor of choice) and edit the file
+      sudo vim /etc/runit/sv/ipp-usb/run
+        #!/bin/sh
+        exec ipp-usb
+    ## Now we make the file executable
+      sudo chmod +x /etc/runit/sv/ipp-usb/run
+    ## Now we can finally start the service with
+      sudo ln -s /etc/runit/sv/ipp-usb /run/runit/service
+      sudo sv up ipp-usb
+        ## to check wether the avahi-daemon is running, use this command:
+          sudo sv status ipp-usb
+        ## you should get something like this
+          run: ipp-usb: (pid 3953) 10s
+
+## Open the config and change „hosts“ using your favourite Text Editor (vim, nano,...)
+	sudo vim /etc/nsswitch.conf
+	  hosts: files mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] dns mymachines
+
+## restart the avahi-daemon
+  sudo sv restart avahi-daemon
+
+## Configure your firewall to allow following ports (in this case ufw/gufw) You may need to the command to your Firewall Service
+  sudo ufw allow 631/tcp
+  sudo ufw allow 5353/udp
+
+## Add yourself to the scanner and lp (printer) Group
+  sudo gpasswd -a "$USER" scanner
+  sudo gpasswd -a "$USER" lp
+  sudo gpasswd -a "$USER" lpadmin NOTE: the person in this group has 100% modifying right for printers. If the person is you/the owner of the PC this is fine. If you're adding
+                                        a family user, coworker,... someone who should not have administrative rights, simply don't add them to the lpadmin group
+
+## Log out and back in
+
+## Add your printer via the installed package "system-config-printer"    
