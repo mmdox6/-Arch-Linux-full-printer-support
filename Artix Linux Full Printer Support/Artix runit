@@ -3,11 +3,11 @@ NOTE: to get a better experience I recommend adding the Arch repos in order to g
   2. Edit the "/etc/pacman.conf" file and add the arch repo at the bottom like this:
       [extra]
       Include = /etc/pacman.d/mirrorlist-arch
-  4. Populate the archlinux keyring
+  3. Populate the archlinux keyring
 	 sudo pacman-key --populate archlinux
-  3. Resynchronise your package database with
+  4. Resynchronise your package database with
       sudo pacman -Sy
-  4. Add the "ipp-usb" packages to the long list of packages to install
+  5. Add the "ipp-usb" packages to the long list of packages to install
 
 ## First install the necessary packages
 	sudo pacman -S --needed cups cups-filters cups-pdf ghostscript gsfonts gutenprint foomatic-db foomatic-db-ppds system-config-printer avahi nss-mdns smbclient sane sane-runit hplip
