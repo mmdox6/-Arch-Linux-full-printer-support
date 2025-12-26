@@ -11,7 +11,7 @@
   sudo systemctl enable --now ipp-usb.service
 
 ## Open the config and change „hosts“ using your favourite Text Editor (vim, nano,...)
-  '''sudo nano /etc/nsswitch.conf'''
+	sudo nano /etc/nsswitch.conf
 	  hosts: files mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] 	dns mymachines
 
 ## Restart the AVAHI service
