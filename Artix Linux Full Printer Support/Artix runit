@@ -3,6 +3,8 @@ NOTE: to get a better experience I recommend adding the Arch repos in order to g
   2. Edit the "/etc/pacman.conf" file and add the arch repo at the bottom like this:
       [extra]
       Include = /etc/pacman.d/mirrorlist-arch
+  4. Populate the archlinux keyring
+	 sudo pacman-key --populate archlinux
   3. Resynchronise your package database with
       sudo pacman -Sy
   4. Add the "ipp-usb" packages to the long list of packages to install
