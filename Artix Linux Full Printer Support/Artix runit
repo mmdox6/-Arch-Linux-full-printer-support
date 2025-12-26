@@ -1,4 +1,4 @@
-NOTE: to get a better experience I recommend adding the Arch repos in order to get two packages, that are missing in the Artix repos
+NOTE: to get a better experience I recommend adding the Arch repos in order to get a package, that is missing in the Artix repos
   1. Install the "artix-archlinux-support" package
   2. Edit the "/etc/pacman.conf" file and add the arch repo at the bottom like this:
       [extra]
