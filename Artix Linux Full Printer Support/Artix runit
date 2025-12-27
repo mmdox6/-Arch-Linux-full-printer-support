@@ -40,7 +40,7 @@ NOTE: to get a better experience I recommend adding the Arch repos in order to g
   NOTE: since we installed "ipp-usb" from the arch repo, it does not automatically create a service file in our /etc/runit/sv/ directory. Therefore we will have to create the file manually
     ## First create a service directory
       sudo mkdir -v /etc/runit/sv/ipp-usb
-    ## Now we create the run file (replace vim with your editor of choice) and edit the file
+    ## Now we create the run file (replace vim with your editor of choice) and edit it
       sudo vim /etc/runit/sv/ipp-usb/run
         #!/bin/sh
         exec ipp-usb
